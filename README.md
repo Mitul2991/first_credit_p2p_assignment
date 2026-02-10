@@ -60,6 +60,7 @@ So, keeping all of this into account, the logistic regression model was used for
 The final logistic regression model was created after tuning parameters as well as excluding features with high multi-collinearity with each other. A check was also made for each feature's directionality in the model and since, all the features were in sync in terms of intuitive sense, none of them were removed with regards to this.
 
 The following features had a VIF>5 and they were iteratively removed :
+
 <img width="332" height="191" alt="image" src="https://github.com/user-attachments/assets/85b1de5c-7b52-4baf-b0f2-66962c281849" />
 
 
