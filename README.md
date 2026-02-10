@@ -84,17 +84,20 @@ SHAP summary plot :
 Looking at the shap values and model co-efficients, we can see that the balance_ratio, age, connect_rate, rpc_rate, ptp_rate and was_email_used are very influential. In terms of directionality, was_email_used is inversly proportional which might indicate that emails were used for sections that were more unresponsive in terms of payment.
 
 ## Starter model :
-Only ~500 loans were starter accounts and so, data for training was very less. In such a situation, using simpler models is more straightforward than using more complex models.
+Only ~500 loans were starter accounts and so, data for training was very less. In such a situation, using simpler models is more straightforward than using more complex models. Models like Logistic Regression, Decision Tree and Random Forest were heavily influenced by only a couple of features, namely, days_since_last_payment, total_payment_to_original, days_bw_last_notice_last_pmt and days_bw_chargeoff_last_pmt. Using a multiple tree model here would have been effective as results are aggregated over those trees and weights are more spread out across the features. This was observed in the Random Forest model but a lot more in the XGBoost model and so given that there was no overfitting between the train and test sets, the XGBoost model was selected.
+
+Manual parameter tuning was done. Since, XGBoost is a complex multiple-trees based model, keeping it as simple as possible in this context was important, otherwise, it would lead to overfitting in such a small set. A max_depth of 2 along with very low proportions of subsample and colsample_bytree was required so that the model generalizes well by training trees on smaller proportions of records as well as features. Below are the final model performance metrics :
+
+<img width="640" height="148" alt="image" src="https://github.com/user-attachments/assets/fbc8fadc-9f5e-49e6-bd60-5f9aea532080" />
+
+Feature Importances :
+
+<img width="322" height="871" alt="image" src="https://github.com/user-attachments/assets/4593e4a7-8259-4751-86be-5dd19b16b9cb" />
 
 
-
-
-
-
-### 
 ### Assumptions
 ### Final Performance and Testing
-## Starter model :
+## Non-starter model :
 Metrics like Accuracy, Precision, Recall and Specificity were calculated at every probability cut-off from 0 to 100 for both test and train sets to check performance. Below are the results :
 Train :
 <img width="1305" height="102" alt="image" src="https://github.com/user-attachments/assets/8e16d7aa-6f62-48aa-ba85-a40e16c9346c" />
@@ -103,6 +106,19 @@ Test :
 <img width="1305" height="105" alt="image" src="https://github.com/user-attachments/assets/5a09cb09-f316-4b29-bc06-cb485a46ccd7" />
 
 A probability cut-off of 22% is recommended as threshold because at a Precision of around 65%, we were able to capture around 34% of the ones who paid whilst also capturing most of the ones who did not pay. Precision over Recall should be important in this scenario as we cannot False Positives to be higher because that might mean de-prioritization of accounts that are not going to pay which in turn, might lead to more losses because of less repayment pressure.
+
+## Starter model :
+Another way of evaluating the starter model was to create a propensity to pay score from 0-1000. The model probabilities were scaled to this range and bucketwise cumulative paid and not-paid populations were calculated to understand bin-wise behaviour as well as overall score wise accumulation of paid and not-paid. This would give us an idea of the threshold at which the KS (separation between the classes) could be the highest. Below is the table for the test-set :
+
+<img width="1182" height="302" alt="image" src="https://github.com/user-attachments/assets/4bd924af-aaa3-4295-8801-ee5015ffc03d" />
+
+Overall-set :
+
+<img width="1215" height="321" alt="image" src="https://github.com/user-attachments/assets/42e9846a-106d-43c1-8d2d-20aa3dc1ba5f" />
+
+The performances between the two-sets is similar and we can a good separation around the 500 mark which is where the KS-value is highest as well. Beyond 500, we can see that around 60% of the paid population lies whereas below 500, around 90% of the unpaid population lies. Below is the KS-curve for a better representation :
+
+<img width="901" height="628" alt="image" src="https://github.com/user-attachments/assets/f2cc273b-6af6-490d-9bcf-1f42703fb320" />
 
 
 
@@ -114,26 +130,5 @@ A probability cut-off of 22% is recommended as threshold because at a Precision 
 - Grid search hyper-parameter tuning
 - Transformations like scaling
 
-## 📂 Project Structure
-Explain important files and folders.
-
-## ⚙️ Installation & Setup
-How to run this project locally.
-
-## ▶️ Usage
-How to execute the code.
-
-## 📊 Results
-Metrics, outputs, plots, or conclusions.
-
-## 🧪 Experiments
-(Optional) Hyperparameters, ablations, comparisons.
-
-## 🚀 Future Work
-Improvements you would make.
-
 ## 👤 Author
-Your name, course, institution.
-
-## 📄 License
-(Optional)
+Mitul Desai
