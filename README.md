@@ -123,7 +123,7 @@ The performances between the two-sets is similar and we can a good separation ar
 
 
 ### Things that could have been tried
-- Additional Features 
+- Additional Features : compare vintage of loans vs the current outstanding (loan charged off in the last 6 months and % of principal paid back vs loans charged off in the last 1 year vs % of principal paid back)
 - Extensive EDA for correlation analysis
 - Feature selection techniques like RFE
 - Class imbalance techniques like SMOTE
