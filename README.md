@@ -47,11 +47,37 @@ Assuming non-starters have made little to no payment which was also reflected in
 ### Transformations/Cleaning
 Age was clipped from 20 to 65 and ages outside that range were unrealistic.
 Communication features had a very low fill-rate but that could have been SMS/Email communications could have been sent only a fraction of the total loan ids. In such a scenario, flag features like was_sms_used and was_email_used could be helpful as they give the model this information that an attempt to communicate was not made.
+For other features, null values were filled with 0's since most of them were ratios or percentages.
 
 ### Models / algorithms
 ## Non-starter model :
 The Non-starter model had sufficient data but was massively imbalanced in terms of payment. Only 173 had made a payment out of around 1.5 lakhs which accounted for only 0.1%. And thus, all models tried were very high in terms of Train/Test set AUC but it was important to select the right algorithm in terms of the features the model used.
-- Logistic regression : 
+- Logistic regression : Through cross-validation an avergae AUC of 0.91 and a standard deviation of 0.08 was observed. In terms of feature importance, this model heavily relied on balance_ratio, email_delivered_read_ratio as well as call-rates like connect_rate, rpc_rate, ptp_rate, etc. Their directionalities made intuitive sense as well. While call-rates were directly propotional to the odds of paying, balance_ratio and email_delivered_read_ratio were inversly proportional to the same.
+- In case of other models like Decision Tree, Random Forest, XGBoost, etc., the scenario was that the AUCs were pretty high but the models were influenced by one feature, namely, balance_ratio. Parameter tuning as well as excluding this feature from the model did not help, as the models then overly relied on other features.
+So, keeping all of this into account, the logistic regression model was used for it's extensive use of all the features available as well as their correct use in terms of directionality.
+
+## Final model
+The final logistic regression model was created after tuning parameters as well as excluding features with high multi-collinearity with each other. A check was also made for each feature's directionality in the model and since, all the features were in sync in terms of intuitive sense, none of them were removed with regards to this.
+
+The following features had a VIF>5 and they were iteratively removed :
+<img width="332" height="191" alt="image" src="https://github.com/user-attachments/assets/85b1de5c-7b52-4baf-b0f2-66962c281849" />
+
+
+The following features used in the model were found to be highly correlated to each other :
+<img width="831" height="316" alt="image" src="https://github.com/user-attachments/assets/7633c218-50c9-4385-b61f-bc32674f36fe" />
+
+Also, to check for feature importance in the model, shap values and Wald-chi were calculated. Below is a table showing these metrics along with the model co-efficients :
+<img width="1068" height="660" alt="image" src="https://github.com/user-attachments/assets/f46879d1-0b80-4b5b-8405-f8172351a460" />
+
+Looking at the co-efficients, the shap-values and the Wald-chi for the highly correlated features, days_since_last_email_read and email_sent_delivered_ratio were removed since the magnitude of these co-efficients were lower as compared to their corresponding highly correlated features. And in terms of the VIF, communication_vintage and was_sms_used were iteratively removed.
+
+In terms of parameter tuning, L1, L2 as well as mix of the two techniques were used but that did not really have an impact on the model metrics. And so, below are the final metrics for model performance :
+<img width="627" height="142" alt="image" src="https://github.com/user-attachments/assets/59fe7796-4de9-4b8b-90a1-043888a57289" />
+
+Below is the final table for model co-efficients and importance :
+<img width="1060" height="486" alt="image" src="https://github.com/user-attachments/assets/f526b147-8f7e-4f00-a10b-70347c6b5155" />
+
+
 
 
 ### 
