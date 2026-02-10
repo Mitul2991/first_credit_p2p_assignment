@@ -99,8 +99,6 @@ Feature Importances :
 
 <img width="322" height="871" alt="image" src="https://github.com/user-attachments/assets/4593e4a7-8259-4751-86be-5dd19b16b9cb" />
 
-
-### Assumptions
 ### Final Performance and Testing
 ## Non-starter model :
 Metrics like Accuracy, Precision, Recall and Specificity were calculated at every probability cut-off from 0 to 100 for both test and train sets to check performance. Below are the results :
@@ -126,7 +124,6 @@ Overall-set :
 The performances between the two-sets is similar and we can a good separation around the 500 mark which is where the KS-value is highest as well. Beyond 500, we can see that around 60% of the paid population lies whereas below 500, around 90% of the unpaid population lies. Below is the KS-curve for a better representation :
 
 <img width="901" height="628" alt="image" src="https://github.com/user-attachments/assets/f2cc273b-6af6-490d-9bcf-1f42703fb320" />
-
 
 
 ### Things that could have been tried
