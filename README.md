@@ -77,15 +77,40 @@ In terms of parameter tuning, L1, L2 as well as mix of the two techniques were u
 Below is the final table for model co-efficients and importance :
 <img width="1060" height="486" alt="image" src="https://github.com/user-attachments/assets/f526b147-8f7e-4f00-a10b-70347c6b5155" />
 
+SHAP summary plot :
+
+<img width="1022" height="756" alt="image" src="https://github.com/user-attachments/assets/dccc7c5e-8cc3-4a61-a5ae-6058778840a6" />
+
+Looking at the shap values and model co-efficients, we can see that the balance_ratio, age, connect_rate, rpc_rate, ptp_rate and was_email_used are very influential. In terms of directionality, was_email_used is inversly proportional which might indicate that emails were used for sections that were more unresponsive in terms of payment.
+
+## Starter model :
+Only ~500 loans were starter accounts and so, data for training was very less. In such a situation, using simpler models is more straightforward than using more complex models.
+
+
+
 
 
 
 ### 
 ### Assumptions
 ### Final Performance and Testing
+## Starter model :
+Metrics like Accuracy, Precision, Recall and Specificity were calculated at every probability cut-off from 0 to 100 for both test and train sets to check performance. Below are the results :
+Train :
+<img width="1305" height="102" alt="image" src="https://github.com/user-attachments/assets/8e16d7aa-6f62-48aa-ba85-a40e16c9346c" />
+
+Test :
+<img width="1305" height="105" alt="image" src="https://github.com/user-attachments/assets/5a09cb09-f316-4b29-bc06-cb485a46ccd7" />
+
+A probability cut-off of 22% is recommended as threshold because at a Precision of around 65%, we were able to capture around 34% of the ones who paid whilst also capturing most of the ones who did not pay. Precision over Recall should be important in this scenario as we cannot False Positives to be higher because that might mean de-prioritization of accounts that are not going to pay which in turn, might lead to more losses because of less repayment pressure.
+
+
 
 ### Things that could have been tried
-- Additional Features
+- Additional Features 
+- Extensive EDA for correlation analysis
+- Feature selection techniques like RFE
+- Class imbalance techniques like SMOTE
 - Grid search hyper-parameter tuning
 - Transformations like scaling
 
