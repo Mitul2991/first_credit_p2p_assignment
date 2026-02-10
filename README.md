@@ -11,8 +11,6 @@ Snapshot data for charged-off loans in terms of collections and the communicatio
 In terms of features, repayment snapshot data was available for all the accounts. Last payment amount, Principal amount, Current outstanding, total payments, chargeoff date, last payment date, age, etc. which gave an indication of where an account was in terms of repaying at regular intervals and the longetivity of the collection process. In addition to this, data regarding the calls made to them and the interactions had was also provided, i.e, the frequency of calls made, calls connected and what was said on these calls in terms of repayment, etc. This set had around 1.5 lakh loan ids.
 Another dataset regarding communications like SMS and Emails sent to some of these loans was also provided. This data was transactional in that emails sent, delivered and read were recorded. Similarly, SMS'es sent and delivered were recorded. This data had around 16k loans which formed a subset of the 1.5 lakh loans.
 
-## Assumptions
-
 ## 🧠 Approach / Methodology
 ### Feature Creation
 In terms of communication, features with a view to explaining the frequency of communication as well as the reach were created. Along with this, a correlation to what was said in response by these individuals was also sought and so a lot of the focus was on creating communication vintages, delivery rates, read rates and response rates. Below are these features :
@@ -25,9 +23,22 @@ In terms of communication, features with a view to explaining the frequency of c
 - email_sent_delivered_ratio : ratio of times email delivered to times email sent
 - email_delivered_read_ratio : ratio of times email read to times email delivered
 - sms_sent_delivered_ratio : ratio of times sms delivered to times sms sent
-- Models / algorithms
-- Assumptions
-- Key steps
+
+Then, based on the interactions had with these individuals or the attempts made to do so through calling, the following features were created to best understand the level of communication that was achieved and also the kind of response recorded :
+- connect_rate : % of times a call-connection was made out of the times the number was dialed
+- rpc_rate : % of times the call connected to was a right party contact
+- ptp_rate : % of times the call connected to promised to pay the outstanding
+- drop_rate : % of times call was dropped out of the times a number was dialed
+- days_bw_last_notice_last_pmt : no of days between last notice sent and last payment amount
+
+Finally, features that represented historical repayment patterns as well as the collection vintages were created. These were created with a view to depict the willingness to pay over time as well as to understand the scenarios for the ones who pay as opposed to the ones who don't.
+
+
+
+### Models / algorithms
+### Assumptions
+### Final Performance and Testing
+### Things that could have been tried
 
 ## 📂 Project Structure
 Explain important files and folders.
