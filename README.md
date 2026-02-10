@@ -65,17 +65,21 @@ The following features had a VIF>5 and they were iteratively removed :
 
 
 The following features used in the model were found to be highly correlated to each other :
+
 <img width="831" height="316" alt="image" src="https://github.com/user-attachments/assets/7633c218-50c9-4385-b61f-bc32674f36fe" />
 
 Also, to check for feature importance in the model, shap values and Wald-chi were calculated. Below is a table showing these metrics along with the model co-efficients :
+
 <img width="1068" height="660" alt="image" src="https://github.com/user-attachments/assets/f46879d1-0b80-4b5b-8405-f8172351a460" />
 
 Looking at the co-efficients, the shap-values and the Wald-chi for the highly correlated features, days_since_last_email_read and email_sent_delivered_ratio were removed since the magnitude of these co-efficients were lower as compared to their corresponding highly correlated features. And in terms of the VIF, communication_vintage and was_sms_used were iteratively removed.
 
 In terms of parameter tuning, L1, L2 as well as mix of the two techniques were used but that did not really have an impact on the model metrics. And so, below are the final metrics for model performance :
+
 <img width="627" height="142" alt="image" src="https://github.com/user-attachments/assets/59fe7796-4de9-4b8b-90a1-043888a57289" />
 
 Below is the final table for model co-efficients and importance :
+
 <img width="1060" height="486" alt="image" src="https://github.com/user-attachments/assets/f526b147-8f7e-4f00-a10b-70347c6b5155" />
 
 SHAP summary plot :
@@ -101,9 +105,11 @@ Feature Importances :
 ## Non-starter model :
 Metrics like Accuracy, Precision, Recall and Specificity were calculated at every probability cut-off from 0 to 100 for both test and train sets to check performance. Below are the results :
 Train :
+
 <img width="1305" height="102" alt="image" src="https://github.com/user-attachments/assets/8e16d7aa-6f62-48aa-ba85-a40e16c9346c" />
 
 Test :
+
 <img width="1305" height="105" alt="image" src="https://github.com/user-attachments/assets/5a09cb09-f316-4b29-bc06-cb485a46ccd7" />
 
 A probability cut-off of 22% is recommended as threshold because at a Precision of around 65%, we were able to capture around 34% of the ones who paid whilst also capturing most of the ones who did not pay. Precision over Recall should be important in this scenario as we cannot False Positives to be higher because that might mean de-prioritization of accounts that are not going to pay which in turn, might lead to more losses because of less repayment pressure.
